@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodle | Comparez les prix, économisez de l'argent</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="manifest" href="/static/site.webmanifest">
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.4/dist/flowbite.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            font-size: 14px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex justify-center mt-28">
+
+        <div class="max-w-2xl mx-auto w-full">
+            <!-- center image -->
+            <div class="flex justify-center">
+                <img src="/static/images/logo.svg" alt="logo" class="w-1/2">
+            </div>
+            <br>
+ 
+            <form class="flex items-center" onsubmit="return false;">
+
+                <label class="sr-only">Recherche</label>
+                <div class="relative w-full">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <input type="text" id="search-input"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full pl-10 p-2.5 "
+                        placeholder="Comparez les prix, économisez de l'argent..." required>
+
+                </div>
+                <button type="submit" onclick="search()"
+                    class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-red-700 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
+                    <svg class="mr-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>Rechercher</button>
+
+                <button
+                    class="inline-flex items-center py-2.5 px-3 w-[12rem] mx-auto ml-2 text-sm font-medium text-red-700 bg-white rounded-lg border border-red-700 "
+                    type="button" data-modal-toggle="defaultModal">
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 -ml-1 w-5 h-5" viewBox="0 0 23.625 23.625"
+                        style="enable-background:new 0 0 512 512" xml:space="preserve">
+                        <path
+                            d="M11.812 0C5.289 0 0 5.289 0 11.812s5.289 11.813 11.812 11.813 11.813-5.29 11.813-11.813S18.335 0 11.812 0zm2.459 18.307c-.608.24-1.092.422-1.455.548a3.838 3.838 0 0 1-1.262.189c-.736 0-1.309-.18-1.717-.539s-.611-.814-.611-1.367c0-.215.015-.435.045-.659a8.23 8.23 0 0 1 .147-.759l.761-2.688c.067-.258.125-.503.171-.731.046-.23.068-.441.068-.633 0-.342-.071-.582-.212-.717-.143-.135-.412-.201-.813-.201-.196 0-.398.029-.605.09-.205.063-.383.12-.529.176l.201-.828c.498-.203.975-.377 1.43-.521a4.225 4.225 0 0 1 1.29-.218c.731 0 1.295.178 1.692.53.395.353.594.812.594 1.376 0 .117-.014.323-.041.617a4.129 4.129 0 0 1-.152.811l-.757 2.68a7.582 7.582 0 0 0-.167.736 3.892 3.892 0 0 0-.073.626c0 .356.079.599.239.728.158.129.435.194.827.194.185 0 .392-.033.626-.097.232-.064.4-.121.506-.17l-.203.827zm-.134-10.878a1.807 1.807 0 0 1-1.275.492c-.496 0-.924-.164-1.28-.492a1.57 1.57 0 0 1-.533-1.193c0-.465.18-.865.533-1.196a1.812 1.812 0 0 1 1.28-.497c.497 0 .923.165 1.275.497.353.331.53.731.53 1.196 0 .467-.177.865-.53 1.193z"
+                            fill="#991b1b" data-original="#030104" />
+                    </svg><span> À propos</span></button>
+            </form>
+
+        </div>
+    </div>
+
+
+
+
+
+    <div class="bg-white py-6 sm:py-8 lg:py-12">
+        <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
+
+            <div class="grid" id="loading">
+            </div>
+
+            <div class="grid" id="no-results">
+
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-8" id="result-grid">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="defaultModal" tabindex="-1" aria-hidden="true"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+        <div class="relative w-full h-full max-w-2xl md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow ">
+                <!-- Modal header -->
+                <div class="flex items-start justify-between p-4 border-b rounded-t ">
+                    <h3 class="text-xl font-semibold text-gray-900 ">
+                        À propos
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center  "
+                        data-modal-toggle="defaultModal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Fermer</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6">
+                    <p class="text-base leading-relaxed text-gray-500 ">
+                        Ce projet a été créé par Amna Kouki pour aider les consommateurs à trouver le meilleur prix
+                        possible lors de l'achat de produits en ligne. J'ai utilisé les technologies Python, Flask,
+                        HTML,
+                        CSS, JavaScript et Tailwind pour créer une application Web facile à utiliser qui permet aux
+                        utilisateurs
+                        de comparer les prix de produits sur différents sites d'achat en ligne. Ce site a été conçu pour
+                        être responsive et "Mobile-Friendly" afin de garantir une expérience de navigation optimale pour
+                        tous les utilisateurs, quel que soit leur appareil.
+                        <br><br>
+                        L'objectif de ce projet est de fournir une expérience de shopping en ligne transparente et
+                        efficace en
+                        donnant aux utilisateurs un accès facile aux prix des produits sur différents sites. J'espère
+                        que notre projet sera utile pour les consommateurs qui cherchent à économiser de
+                        l'argent lors de leurs achats en ligne.
+
+                        <br><br>
+
+                        <!-- Github button -->
+                        <a href="https://github.com/AmnaKouki" target="_blank"
+                            class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-red-700 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+                                width="512" height="512" x="0" y="0" viewBox="0 0 24 24"
+                                style="enable-background:new 0 0 512 512" xml:space="preserve"
+                                class="mr-2 -ml-1 w-5 h-5">
+                                <g>
+                                    <path
+                                        d="m12 .5c-6.63 0-12 5.28-12 11.792 0 5.211 3.438 9.63 8.205 11.188.6.111.82-.254.82-.567 0-.28-.01-1.022-.015-2.005-3.338.711-4.042-1.582-4.042-1.582-.546-1.361-1.335-1.725-1.335-1.725-1.087-.731.084-.716.084-.716 1.205.082 1.838 1.215 1.838 1.215 1.07 1.803 2.809 1.282 3.495.981.108-.763.417-1.282.76-1.577-2.665-.295-5.466-1.309-5.466-5.827 0-1.287.465-2.339 1.235-3.164-.135-.298-.54-1.497.105-3.121 0 0 1.005-.316 3.3 1.209.96-.262 1.98-.392 3-.398 1.02.006 2.04.136 3 .398 2.28-1.525 3.285-1.209 3.285-1.209.645 1.624.24 2.823.12 3.121.765.825 1.23 1.877 1.23 3.164 0 4.53-2.805 5.527-5.475 5.817.42.354.81 1.077.81 2.182 0 1.578-.015 2.846-.015 3.229 0 .309.21.678.825.56 4.801-1.548 8.236-5.97 8.236-11.173 0-6.512-5.373-11.792-12-11.792z"
+                                        fill="#ffffff" data-original="#000000" class=""></path>
+                                </g>
+                            </svg> Mon Profil Github </a>
+
+
+                        <!-- Github button -->
+                        <a href="mailto:amnakouki2014@gmail.com" target="_blank"
+                            class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-red-700 rounded-lg border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+                                width="512" height="512" x="0" y="0" viewBox="0 0 512 512"
+                                style="enable-background:new 0 0 512 512" xml:space="preserve"
+                                class="mr-2 -ml-1 w-5 h-5">
+                                <g>
+                                    <path
+                                        d="m298.789 313.693c-12.738 8.492-27.534 12.981-42.789 12.981-15.254 0-30.05-4.489-42.788-12.981l-209.803-139.873c-1.164-.776-2.298-1.585-3.409-2.417v229.197c0 26.278 21.325 47.133 47.133 47.133h417.733c26.278 0 47.133-21.325 47.133-47.133v-229.198c-1.113.834-2.249 1.645-3.416 2.422z"
+                                        fill="#ffffff" data-original="#000000" class=""></path>
+                                    <path
+                                        d="m20.05 148.858 209.803 139.874c7.942 5.295 17.044 7.942 26.146 7.942 9.103 0 18.206-2.648 26.148-7.942l209.803-139.874c12.555-8.365 20.05-22.365 20.05-37.475 0-25.981-21.137-47.117-47.117-47.117h-417.766c-25.98.001-47.117 21.137-47.117 47.142 0 15.085 7.496 29.085 20.05 37.45z"
+                                        fill="#ffffff" data-original="#000000" class=""></path>
+                                </g>
+                            </svg> Contactez-moi</a>
+
+                    </p>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>
