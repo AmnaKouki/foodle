@@ -14,7 +14,7 @@ Requirements: Python 3.11+
 Pour installer Foodle, vous devez d'abord cloner le dépôt GitHub sur votre ordinateur. Vous pouvez le faire en utilisant la commande suivante:
 
 ```bash
-git clone 
+git clone https://github.com/AmnaKouki/foodle
 ```
 
 Ensuite, vous devez executer cette commande:
